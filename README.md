@@ -13,7 +13,7 @@ Unlike traditional portfolios, **The Last Chronicle** is designed as an interact
 Explore the archive:
 
 ```text
-[ Enter Main Scenario ]
+[ Enter Main Scenario ](https://chronicle-of-fate-portfolio.vercel.app/)
 ```
 
 ---
