@@ -16,6 +16,10 @@ const CustomCursor = () => {
   const [particles, setParticles] = useState([]);
 
   useEffect(() => {
+    // Detect if mouse pointer is fine and hover is supported (ignore touch-only devices)
+    const hasMouse = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!hasMouse) return;
+
     // Handle mouse movement and particle spawn
     const handleMouseMove = (e) => {
       cursorX.set(e.clientX);
