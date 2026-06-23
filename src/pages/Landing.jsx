@@ -27,7 +27,6 @@ const Landing = () => {
   return (
     <section className="landing">
 
-      {/* Background Starfield */}
       <div className="starfield">
         {stars.map((star) => (
           <div
@@ -45,7 +44,6 @@ const Landing = () => {
         ))}
       </div>
 
-      {/* Constellation Lines & Major Stars */}
       <svg className="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
         <line x1="20" y1="35" x2="45" y2="20" className="constellation-line line-1" />
         <line x1="45" y1="20" x2="75" y2="25" className="constellation-line line-2" />
@@ -61,16 +59,12 @@ const Landing = () => {
       <div className="major-star star-cyan" style={{ top: "75%", left: "50%" }}></div>
       <div className="major-star" style={{ top: "60%", left: "15%" }}></div>
 
-      {/* Summoning Effects (First 4 seconds) */}
       <div className="sword-beam"></div>
       <div className="summoning-circle"></div>
-
-      {/* Gear Rings */}
 
       <div className="gear gear-one"></div>
       <div className="gear gear-two"></div>
 
-      {/* Glowing Orbs around the Sword */}
       <div className="orbs-container">
         <div className="orb orb-1"></div>
         <div className="orb orb-2"></div>
@@ -80,25 +74,19 @@ const Landing = () => {
         <div className="orb orb-6"></div>
       </div>
 
-      {/* Sword */}
-
       <img
         src={sword}
         alt="Celestial Sword"
         className="sword"
       />
 
-      {/* ORV Window */}
-
       {showSystem && (
         <div className="system-window">
-          {/* Cybernetic Corner Decorations */}
           <div className="system-corner tl"></div>
           <div className="system-corner tr"></div>
           <div className="system-corner bl"></div>
           <div className="system-corner br"></div>
 
-          {/* Scanline Effect */}
           <div className="system-scanlines"></div>
 
           <div className="system-header">
@@ -107,13 +95,11 @@ const Landing = () => {
           </div>
 
           <div className="system-content">
-            {/* Main Focus: Clear Conditions / Objective */}
             <div className="objective-box">
               <div className="objective-label">CLEAR CONDITIONS</div>
               <p className="objective-text">Understand the creator known as Pritesh.</p>
             </div>
 
-            {/* Grid for parameters */}
             <div className="meta-grid">
               <div className="meta-item">
                 <span className="meta-label">CATEGORY</span>
@@ -133,20 +119,17 @@ const Landing = () => {
               </div>
             </div>
 
-            {/* Penalty Block */}
             <div className="penalty-box">
               <span className="penalty-label">PENALTY FOR FAILURE:</span>
               <span className="penalty-val">Memory wipe and eternal confinement.</span>
             </div>
 
-            {/* Stream/Constellation Messages Header */}
             <div className="feed-header">
               <span className="feed-header-line"></span>
               <span className="feed-header-text">STAR STREAM LOG</span>
               <span className="feed-header-line"></span>
             </div>
 
-            {/* Constellation Feed */}
             <div className="constellations-feed">
               <div className="constellation-msg msg-1">
                 [The constellation 'Demon-like Judge of Fire' is excited to see a new reader.]

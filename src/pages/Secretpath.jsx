@@ -45,12 +45,10 @@ const futureTimelines = [
 const Secretpath = () => {
   const navigate = useNavigate();
 
-  // Scroll to top on load
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Background crimson stars
   const [stars] = useState(() =>
     Array.from({ length: 50 }).map((_, i) => ({
       id: i,
@@ -65,17 +63,14 @@ const Secretpath = () => {
 
   return (
     <div className="secret-path-viewport">
-      {/* Visual Glitch & Crimson Atmosphere Overlays */}
       <div className="secret-crimson-glow-overlay" />
       <div className="secret-grid-overlay" />
       <div className="secret-scanline-overlay" />
 
-      {/* Floating Crimson Energy Orbs */}
       <div className="secret-ambient-orb orb-red-1" />
       <div className="secret-ambient-orb orb-red-2" />
       <div className="secret-ambient-orb orb-red-3" />
 
-      {/* Looping Marquee warning ticker at the very top */}
       <div className="secret-warning-ticker">
         <div className="ticker-inner">
           <span>
@@ -87,7 +82,6 @@ const Secretpath = () => {
         </div>
       </div>
 
-      {/* Twinkling Red Starfield */}
       <div className="secret-starfield">
         {stars.map((s) => (
           <div 
@@ -108,7 +102,6 @@ const Secretpath = () => {
       </div>
 
       <div className="secret-content-container">
-        {/* Navigation back to main page */}
         <motion.div 
           className="secret-back-nav"
           initial={{ opacity: 0, y: -10 }}
@@ -126,7 +119,6 @@ const Secretpath = () => {
           </button>
         </motion.div>
 
-        {/* Header warnings and glitched title */}
         <div className="secret-header">
           <span className="secret-badge-log blink-danger">
             <FaExclamationTriangle className="ticker-danger-icon" /> SYSTEM CRITICAL LEVEL
@@ -139,7 +131,6 @@ const Secretpath = () => {
           </p>
         </div>
 
-        {/* Future branch cards */}
         <div className="secret-branches-grid">
           {futureTimelines.map((item, idx) => (
             <motion.div
@@ -150,7 +141,6 @@ const Secretpath = () => {
               transition={{ duration: 0.6, delay: 0.15 + idx * 0.18, ease: "easeOut" }}
               whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.2, ease: "easeOut" } }}
             >
-              {/* Crimson cyber corners */}
               <div className="card-cyber-bracket tl red-accent"></div>
               <div className="card-cyber-bracket tr red-accent"></div>
               <div className="card-cyber-bracket bl red-accent"></div>
@@ -165,7 +155,6 @@ const Secretpath = () => {
               <h3 className="branch-title text-flicker-hover">{item.title}</h3>
               <span className="branch-classification red-tag">{item.category}</span>
 
-              {/* Dynamic Stability Bar */}
               <div className="branch-stability-block">
                 <div className="stability-meta-row">
                   <span className="stability-label">STABILITY RATIO:</span>
@@ -195,7 +184,6 @@ const Secretpath = () => {
           ))}
         </div>
 
-        {/* Lock seal indicator */}
         <motion.div 
           className="bottom-scenario-seal status-locked"
           initial={{ opacity: 0 }}

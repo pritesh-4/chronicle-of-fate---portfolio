@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'motion/react';
 import { FaBookmark, FaGlobe, FaReact, FaGithub, FaAward, FaBrain } from 'react-icons/fa';
 
-// 6 achievements dataset with timeline, description, result, status
 const achievementsData = [
   {
     id: 1,
@@ -60,7 +59,6 @@ const achievementsData = [
   }
 ];
 
-// Typewriter component for the ORV mini system popups
 const Typewriter = ({ text, delay = 25 }) => {
   const [currentText, setCurrentText] = useState("");
 
@@ -79,7 +77,6 @@ const Typewriter = ({ text, delay = 25 }) => {
   return <span>{currentText}</span>;
 };
 
-// Sub-component representing a single achievement row
 const AchievementRow = ({ index, achievement, isLeft, onUnlock, forceUnlock }) => {
   const rowRef = useRef(null);
   const inView = useInView(rowRef, { once: true, amount: 0.35 });
@@ -102,7 +99,7 @@ const AchievementRow = ({ index, achievement, isLeft, onUnlock, forceUnlock }) =
       const timer = setTimeout(() => {
         setStatus('unlocked');
         onUnlock(index);
-      }, 2350); // System reveal sequence takes 2.3 seconds plus deferment
+      }, 2350);
       return () => {
         clearTimeout(revealTimer);
         clearTimeout(timer);
@@ -112,7 +109,6 @@ const AchievementRow = ({ index, achievement, isLeft, onUnlock, forceUnlock }) =
 
   const isActive = status === 'unlocked' || status === 'revealing' || forceUnlock;
 
-  // Particle list for orbits on hover
   const particles = Array.from({ length: 8 }).map((_, i) => ({
     id: i,
     angle: (i * 360) / 8,
@@ -124,14 +120,12 @@ const AchievementRow = ({ index, achievement, isLeft, onUnlock, forceUnlock }) =
       ref={rowRef} 
       className={`achievements-row ${isLeft ? 'row-left' : 'row-right'} ${status}`}
     >
-      {/* 1. The Orb Node Column */}
-      <div className="orb-node-container">
+          <div className="orb-node-container">
         <motion.div 
           className={`orb-node ${isActive ? 'active' : ''}`}
           whileHover={{ scale: 1.15 }}
           transition={{ type: "spring", stiffness: 300, damping: 15 }}
         >
-          {/* Orbit particles container shown on hover */}
           <div className="orb-orbit-wrap">
             {particles.map((p) => (
               <div 
@@ -145,18 +139,15 @@ const AchievementRow = ({ index, achievement, isLeft, onUnlock, forceUnlock }) =
             ))}
           </div>
 
-          {/* Central glowing core */}
           <div className="orb-core">
             <span className="orb-star">✦</span>
           </div>
           
-          {/* Glow ring */}
           <div className="orb-glow-ring"></div>
         </motion.div>
         <span className="orb-index">0{index + 1}</span>
       </div>
 
-      {/* 2. The Achievement Card Column (Beside the Orb) */}
       <div className="card-container">
         <AnimatePresence mode="wait">
           {status === 'revealing' && (
@@ -168,7 +159,6 @@ const AchievementRow = ({ index, achievement, isLeft, onUnlock, forceUnlock }) =
               exit={{ opacity: 0, scale: 0.95, y: -10, filter: "blur(4px)" }}
               transition={{ duration: 0.35 }}
             >
-              {/* cyber decoration lines */}
               <div className="cyber-bracket tl"></div>
               <div className="cyber-bracket tr"></div>
               <div className="cyber-bracket bl"></div>
@@ -209,7 +199,6 @@ const AchievementRow = ({ index, achievement, isLeft, onUnlock, forceUnlock }) =
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              {/* Celestial Corner Details */}
               <div className="celestial-corner tl">✦</div>
               <div className="celestial-corner tr">✦</div>
               <div className="celestial-corner bl">✦</div>
@@ -250,7 +239,6 @@ const Achievements = () => {
   const [activeOrbs, setActiveOrbs] = useState(new Array(6).fill(false));
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // Handle active states (when orb starts revealing)
   const handleActive = (index) => {
     setActiveOrbs((prev) => {
       const next = [...prev];
@@ -259,7 +247,6 @@ const Achievements = () => {
     });
   };
 
-  // Handle orb unlocks (when typewriter finishes)
   const handleUnlock = (index) => {
     setUnlockedOrbs((prev) => {
       const next = [...prev];
@@ -270,7 +257,6 @@ const Achievements = () => {
 
   const finalUnlocked = unlockedOrbs[5];
 
-  // Mouse tracking to feed coordinates to CSS variables
   const handleMouseMove = (e) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -279,7 +265,6 @@ const Achievements = () => {
     setMousePos({ x, y });
   };
 
-  // Background starfields (2 layers for parallax)
   const [bgStars] = useState(() => 
     Array.from({ length: 40 }).map((_, i) => ({
       id: i,
@@ -302,7 +287,6 @@ const Achievements = () => {
         '--mouse-y': `${mousePos.y}px`
       }}
     >
-      {/* Background Star field */}
       <div className="achievements-starfield">
         {bgStars.map(star => (
           <div
@@ -320,7 +304,6 @@ const Achievements = () => {
         ))}
       </div>
 
-      {/* Title Header */}
       <div className="achievements-header">
         <span className="achievements-system-tag">CHRONICLES OF A GROWING TIMELINE</span>
         <h2 className="achievements-title">[ SCENARIO LOG ]</h2>
@@ -328,37 +311,31 @@ const Achievements = () => {
       </div>
 
       <div className="timeline-container">
-        {/* Zig-Zag Constellation Line Background SVG */}
         <svg 
           className="timeline-svg" 
           viewBox="0 0 100 100" 
           preserveAspectRatio="none"
         >
-          {/* Path 1: Node 1 -> 2 */}
           <path 
             d="M 25 8 L 75 25" 
             className={`constellation-path ${activeOrbs[1] || finalUnlocked ? 'active' : ''}`}
             vectorEffect="non-scaling-stroke"
           />
-          {/* Path 2: Node 2 -> 3 */}
           <path 
             d="M 75 25 L 25 42" 
             className={`constellation-path ${activeOrbs[2] || finalUnlocked ? 'active' : ''}`}
             vectorEffect="non-scaling-stroke"
           />
-          {/* Path 3: Node 3 -> 4 */}
           <path 
             d="M 25 42 L 75 58" 
             className={`constellation-path ${activeOrbs[3] || finalUnlocked ? 'active' : ''}`}
             vectorEffect="non-scaling-stroke"
           />
-          {/* Path 4: Node 4 -> 5 */}
           <path 
             d="M 75 58 L 25 75" 
             className={`constellation-path ${activeOrbs[4] || finalUnlocked ? 'active' : ''}`}
             vectorEffect="non-scaling-stroke"
           />
-          {/* Path 5: Node 5 -> 6 */}
           <path 
             d="M 25 75 L 75 92" 
             className={`constellation-path ${activeOrbs[5] || finalUnlocked ? 'active' : ''}`}
@@ -366,10 +343,7 @@ const Achievements = () => {
           />
         </svg>
 
-        {/* Row Elements */}
         {achievementsData.map((item, idx) => {
-          // Even indexes (0, 2, 4) -> Left Orb, Right Card
-          // Odd indexes (1, 3, 5) -> Right Orb, Left Card (which corresponds to isLeft = false)
           const isLeftOrb = idx % 2 === 0;
           
           return (
@@ -380,13 +354,12 @@ const Achievements = () => {
               isLeft={isLeftOrb}
               onActive={handleActive}
               onUnlock={handleUnlock}
-              forceUnlock={finalUnlocked} // if final is unlocked, activate all
+              forceUnlock={finalUnlocked} 
             />
           );
         })}
       </div>
 
-      {/* Special Scenario updated trigger */}
       <AnimatePresence>
         {finalUnlocked && (
           <motion.div 
@@ -396,7 +369,6 @@ const Achievements = () => {
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.6 }}
           >
-            {/* Cyber Brackets */}
             <div className="banner-bracket tl"></div>
             <div className="banner-bracket tr"></div>
             <div className="banner-bracket bl"></div>

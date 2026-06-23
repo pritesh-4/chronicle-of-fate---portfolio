@@ -4,17 +4,14 @@ import { FaMusic, FaBars, FaTimes } from "react-icons/fa";
 import orvlogo from "../assets/navbar.png"
 import { motion, AnimatePresence } from 'motion/react';
 
-// Tracks the user's intent to play or pause the audio stream globally
 let isAudioEnabled = true;
 
-// Persistent global audio player across Navbar remounts
 const musicUrl = new URL('../assets/music.mpeg', import.meta.url).href;
 const globalAudio = typeof Audio !== 'undefined' ? new Audio(musicUrl) : null;
 if (globalAudio) {
   globalAudio.loop = true;
   globalAudio.play().catch(() => {
-    // Autoplay blocked initially, resolved by interaction handlers
-  });
+    });
 }
 
 const Navbar = () => {
@@ -24,17 +21,16 @@ const Navbar = () => {
   useEffect(() => {
     if (!globalAudio) return;
 
-    // Synchronize play state on mount/render cycle
+  
     if (isPlaying && globalAudio.paused) {
       globalAudio.play()
         .then(() => setIsPlaying(true))
         .catch(() => {
-          // Play blocked on mount
+          
         });
     }
 
-    // Interaction handler to start playing if browser autoplay was blocked
-    const handleFirstInteraction = () => {
+      const handleFirstInteraction = () => {
       if (isPlaying && globalAudio.paused) {
         globalAudio.play()
           .then(() => setIsPlaying(true))
@@ -64,7 +60,6 @@ const Navbar = () => {
     }
   };
   
-  // Stagger container for links
   const listContainerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -76,7 +71,6 @@ const Navbar = () => {
     }
   };
 
-  // Individual link variants
   const linkItemVariants = {
     hidden: { opacity: 0, y: -15 },
     visible: { 
@@ -120,16 +114,13 @@ const Navbar = () => {
         animate={{ y: 0, x: '-50%', opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* Cybernetic Corner Decorations */}
         <div className="system-corner tl"></div>
         <div className="system-corner tr"></div>
         <div className="system-corner bl"></div>
         <div className="system-corner br"></div>
 
-        {/* Scanline Effect */}
         <div className="system-scanlines"></div>
 
-        {/* Logo */}
         <motion.div 
           className='logo'
           initial={{ opacity: 0, x: -20 }}
@@ -141,7 +132,6 @@ const Navbar = () => {
           </Link>
         </motion.div>
 
-        {/* Links */}
         <div className='links'>
           <motion.ul
             variants={listContainerVariants}
@@ -155,9 +145,7 @@ const Navbar = () => {
           </motion.ul>
         </div>
 
-        {/* Right actions */}
         <div className="navbar-actions">
-          {/* Music button */}
           <motion.div 
             className='music'
             initial={{ opacity: 0, scale: 0.7 }}
@@ -178,7 +166,6 @@ const Navbar = () => {
             </button>
           </motion.div>
 
-          {/* Mobile Hamburger toggle */}
           <button 
             className="mobile-menu-toggle"
             onClick={() => setIsMobileMenuOpen(prev => !prev)}
@@ -189,7 +176,6 @@ const Navbar = () => {
         </div>
       </motion.div>
 
-      {/* Mobile Menu Drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
@@ -199,13 +185,11 @@ const Navbar = () => {
             animate="visible"
             exit="exit"
           >
-            {/* Cybernetic Corner Decorations */}
             <div className="system-corner tl"></div>
             <div className="system-corner tr"></div>
             <div className="system-corner bl"></div>
             <div className="system-corner br"></div>
 
-            {/* Scanline Effect */}
             <div className="system-scanlines"></div>
 
             <motion.ul 

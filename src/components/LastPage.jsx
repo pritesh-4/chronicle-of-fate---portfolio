@@ -3,12 +3,10 @@ import { motion, AnimatePresence, useInView } from 'motion/react';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import swordImage from '../assets/sword1.png';
 
-// Celestial Social Link wrapper with interactive particle burst on hover
 const CelestialSocialIcon = ({ href, icon }) => {
   const [particles, setParticles] = useState([]);
 
   const handleMouseEnter = () => {
-    // Generate 8 gold particles radiating outwards
     const newParticles = Array.from({ length: 8 }).map((_, i) => ({
       id: i,
       angle: (i * 360) / 8 + (Math.random() * 15 - 7.5),
@@ -19,7 +17,6 @@ const CelestialSocialIcon = ({ href, icon }) => {
   };
 
   const handleMouseLeave = () => {
-    // Staggered cleanup of particles to let their anim finish
     setTimeout(() => {
       setParticles([]);
     }, 700);
@@ -38,7 +35,6 @@ const CelestialSocialIcon = ({ href, icon }) => {
         {icon}
       </div>
       
-      {/* Particle Burst Overlay */}
       <AnimatePresence>
         {particles.map((p) => (
           <motion.span
@@ -73,12 +69,10 @@ const LastPage = () => {
   const isSysInView = useInView(sysRef, { once: true, amount: 0.5 });
   const isBottomInView = useInView(bottomSentinelRef, { once: false, amount: 0.1 });
 
-  // Sequential system notifications step state
-  const [sysStep, setSysStep] = useState(0); // 0: hidden, 1: Archive Closing, 2: Saved, 3: Story Continues
+  const [sysStep, setSysStep] = useState(0);
   const [showFourthWall, setShowFourthWall] = useState(false);
   const [hasTriggeredFourthWall, setHasTriggeredFourthWall] = useState(false);
 
-  // Background stars data
   const [stars] = useState(() =>
     Array.from({ length: 40 }).map((_, i) => ({
       id: i,
@@ -90,7 +84,6 @@ const LastPage = () => {
     }))
   );
 
-  // Stagger system notification events when the bottom banner rolls in
   useEffect(() => {
     if (isSysInView) {
       const timer0 = setTimeout(() => setSysStep(1), 50);
@@ -104,7 +97,6 @@ const LastPage = () => {
     }
   }, [isSysInView]);
 
-  // Fourth Wall toast trigger once reaching the absolute bottom boundary
   useEffect(() => {
     if (isBottomInView && !hasTriggeredFourthWall) {
       const timer0 = setTimeout(() => {
@@ -121,7 +113,6 @@ const LastPage = () => {
     }
   }, [isBottomInView, hasTriggeredFourthWall]);
 
-  // Framer Motion staggered text templates
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -148,7 +139,6 @@ const LastPage = () => {
       ref={sectionRef}
       className="last-page-section"
     >
-      {/* Background Starfield */}
       <div className="last-page-starfield">
         {stars.map((s) => (
           <motion.div 
@@ -171,7 +161,6 @@ const LastPage = () => {
         ))}
       </div>
 
-      {/* Center Background Giant Fate Circle */}
       {isSectionInView && (
         <motion.div 
           className="last-page-fate-circle-wrap"
@@ -184,7 +173,6 @@ const LastPage = () => {
             <circle cx="250" cy="250" r="200" stroke="rgba(217, 185, 106, 0.2)" strokeWidth="1.5" fill="none" />
             <circle cx="250" cy="250" r="160" stroke="rgba(217, 185, 106, 0.15)" strokeWidth="0.75" fill="none" strokeDasharray="8 4" />
             
-            {/* Compass dials */}
             {Array.from({ length: 12 }).map((_, i) => {
               const angle = (i * 30 * Math.PI) / 180;
               const x1 = 250 + 200 * Math.sin(angle);
@@ -196,7 +184,6 @@ const LastPage = () => {
               );
             })}
 
-            {/* Constellation web segments */}
             <line x1="250" y1="50" x2="250" y2="450" stroke="rgba(217, 185, 106, 0.08)" strokeWidth="0.75" />
             <line x1="50" y1="250" x2="450" y2="250" stroke="rgba(217, 185, 106, 0.08)" strokeWidth="0.75" />
             <line x1="108" y1="108" x2="392" y2="392" stroke="rgba(217, 185, 106, 0.08)" strokeWidth="0.75" strokeDasharray="5 5" />
@@ -205,7 +192,6 @@ const LastPage = () => {
         </motion.div>
       )}
 
-      {/* Main Visual: Weathered Celestial Sword */}
       {isSectionInView && (
         <motion.div 
           className="ancient-sword-artifact"
@@ -221,7 +207,6 @@ const LastPage = () => {
         </motion.div>
       )}
 
-      {/* Narrative Texts */}
       <div className="last-page-content">
         {isSectionInView && (
           <motion.div 
@@ -230,14 +215,12 @@ const LastPage = () => {
             initial="hidden"
             animate="visible"
           >
-            {/* Elegant Main Stanza */}
             <motion.div className="main-narrative-stanza" variants={textItemVariants}>
               <p className="main-stanza-line font-cinzel">Every timeline eventually ends.</p>
               <p className="main-stanza-line font-cormorant">If our paths cross again,</p>
               <p className="main-stanza-line font-cinzel">perhaps another story will begin.</p>
             </motion.div>
 
-            {/* Smaller Personal Stanza */}
             <motion.div className="secondary-personal-stanza" variants={textItemVariants}>
               <p>The story remains unfinished.</p>
               <p>There are still scenarios left to clear.</p>
@@ -245,7 +228,6 @@ const LastPage = () => {
               <p>Still pages left unwritten.</p>
             </motion.div>
 
-            {/* Reader Recognition Reward Message */}
             <motion.p 
               className="reader-recognition-label font-cormorant"
               variants={textItemVariants}
@@ -253,7 +235,6 @@ const LastPage = () => {
               For that one reader who stayed until the end.
             </motion.p>
 
-            {/* Staggered System messages */}
             <div ref={sysRef} className="last-page-sys-feed">
               <AnimatePresence>
                 {sysStep >= 1 && (
@@ -289,7 +270,6 @@ const LastPage = () => {
               </AnimatePresence>
             </div>
 
-            {/* Contact options under [ Open Communication Channel ] */}
             <motion.div 
               className="open-communication-channel"
               variants={textItemVariants}
@@ -314,10 +294,8 @@ const LastPage = () => {
         )}
       </div>
 
-      {/* Sentinel indicator target for observing bottom scroll boundary */}
       <div ref={bottomSentinelRef} className="bottom-observer-sentinel" />
 
-      {/* Toast Alert showing observation termination */}
       <AnimatePresence>
         {showFourthWall && (
           <motion.div 

@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { FaExclamationTriangle } from 'react-icons/fa';
 import swordImage from '../assets/sword1.png';
 
-// Typewriter warning list for terminal alert window
 const WARNING_LOGS = [
   "Future records detected.",
   "Timeline instability increasing.",
@@ -20,7 +19,7 @@ const WarningTerminalLog = ({ onFinish, triggerOverride }) => {
   const [currentText, setCurrentText] = useState("");
 
   useEffect(() => {
-    if (triggerOverride) return; // Stop typewriter if click override starts
+    if (triggerOverride) return;
 
     const currentLine = WARNING_LOGS[activeLineIndex];
     if (!currentLine) {
@@ -51,7 +50,6 @@ const WarningTerminalLog = ({ onFinish, triggerOverride }) => {
 
   return (
     <div className="warning-log-console">
-      {/* If normal logging */}
       {!triggerOverride && (
         <>
           {completedLines.map((line, idx) => (
@@ -68,7 +66,6 @@ const WarningTerminalLog = ({ onFinish, triggerOverride }) => {
         </>
       )}
 
-      {/* If clicked / overridden */}
       {triggerOverride && (
         <div className="malfunction-override-logs">
           <p className="override-line flash-red">&gt; ACCESS VIOLATION DETECTED</p>
@@ -88,7 +85,7 @@ const ForbiddenRecord = () => {
   
   const inView = useInView(containerRef, { once: true, amount: 0.2 });
   
-  const [phase, setPhase] = useState('dormant'); // 'dormant' | 'active'
+  const [phase, setPhase] = useState('dormant'); 
   const [isHovered, setIsHovered] = useState(false);
   const [overrideActive, setOverrideActive] = useState(false);
   const [isZooming, setIsZooming] = useState(false);
@@ -111,7 +108,6 @@ const ForbiddenRecord = () => {
     const y = e.clientY - rect.top;
     setMousePos({ x, y });
 
-    // Calculate angle/tilt relative to the sword center
     if (swordRef.current) {
       const swordRect = swordRef.current.getBoundingClientRect();
       const sCenterX = swordRect.left + swordRect.width / 2;
@@ -121,7 +117,6 @@ const ForbiddenRecord = () => {
       const dy = e.clientY - sCenterY;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      // Max tilt of 15 degrees, sensitivity decays with distance
       const maxDistance = 450;
       const strength = Math.max(0, 1 - distance / maxDistance);
       
@@ -137,20 +132,15 @@ const ForbiddenRecord = () => {
     if (overrideActive) return;
     setOverrideActive(true);
 
-    // Timeline malfunction transition triggers:
-    // 1. Shaking UI + red flashes
-    // 2. Zoom camera into sword
-    // 3. Navigate to Secret path page
     setTimeout(() => {
       setIsZooming(true);
-    }, 1500); // Wait for override logs to type
+    }, 1500); 
 
     setTimeout(() => {
       navigate('/secretpath');
-    }, 2500); // 2.5s total transition
+    }, 2500);
   };
 
-  // Particles that orbit the sword core initialized once to prevent impurity/flicker
   const [particles] = useState(() => Array.from({ length: 12 }).map((_, i) => ({
     id: i,
     angle: (i * 360) / 12,
@@ -170,7 +160,6 @@ const ForbiddenRecord = () => {
         '--mouse-y': `${mousePos.y}px`
       }}
     >
-      {/* Glitch alert red screen overlay */}
       <AnimatePresence>
         {overrideActive && !isZooming && (
           <motion.div 
@@ -187,7 +176,6 @@ const ForbiddenRecord = () => {
         <AnimatePresence>
           {phase === 'active' && (
             <>
-              {/* 1. Left warning box */}
               <motion.div 
                 className={`warning-window-crimson ${overrideActive ? 'shake-malfunction border-override' : ''}`}
                 initial={{ opacity: 0, x: -40, filter: "blur(6px)" }}
@@ -195,7 +183,6 @@ const ForbiddenRecord = () => {
                 exit={{ opacity: 0, scale: 0.9, filter: "blur(8px)" }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
               >
-                {/* Neon Red cyber corners */}
                 <div className="warning-bracket tl"></div>
                 <div className="warning-bracket tr"></div>
                 <div className="warning-bracket bl"></div>
@@ -224,14 +211,12 @@ const ForbiddenRecord = () => {
                   <p className="warning-reflected-footer">Reader discretion is advised.</p>
                 </div>
 
-                {/* Sub logs typewriter diagnostic */}
                 <div className="warning-sub-feed">
                   <div className="warning-feed-line"></div>
                   <WarningTerminalLog triggerOverride={overrideActive} />
                 </div>
               </motion.div>
 
-              {/* 2. Right floating sword artifact */}
               <motion.div
                 ref={swordRef}
                 className={`sword-artifact-container ${isZooming ? 'zoom-transition' : ''}`}
@@ -248,7 +233,6 @@ const ForbiddenRecord = () => {
                   transition: isZooming ? 'transform 1s cubic-bezier(0.85, 0, 0.15, 1)' : 'transform 0.15s ease-out'
                 }}
               >
-                {/* Orbiting fragments */}
                 <div className={`sword-orbit-layer ${isHovered ? 'speed-orbit' : ''} ${overrideActive ? 'pulled-in' : ''}`}>
                   {particles.map((p) => (
                     <div 
@@ -266,15 +250,12 @@ const ForbiddenRecord = () => {
                   ))}
                 </div>
 
-                {/* Celestial core glowing circle behind the sword */}
                 <div className={`sword-celestial-core-glow ${isHovered ? 'intensify-glow' : ''} ${overrideActive ? 'malfunction-glow' : ''}`} />
 
-                {/* Hover floating trigger label */}
                 <span className={`sword-interactive-label ${isHovered && !overrideActive ? 'show-label' : ''}`}>
                   [ Breach Timeline Seal ]
                 </span>
 
-                {/* The blade image */}
                 <img 
                   src={swordImage} 
                   alt="Forbidden Celestial Sword" 

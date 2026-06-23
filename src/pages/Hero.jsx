@@ -156,7 +156,6 @@ const Hero = () => {
   
 
   
-  // Background particles starfield data
   const [particles] = useState(() =>
     Array.from({ length: 50 }).map((_, i) => ({
       id: i,
@@ -168,7 +167,6 @@ const Hero = () => {
     }))
   );
 
-  // Transition from Phase 1 (initial background display) to Phase 2 (system window) after 2 seconds
   useEffect(() => {
     if (currentPhase === 'initial') {
       const timer = setTimeout(() => {
@@ -178,7 +176,6 @@ const Hero = () => {
     }
   }, [currentPhase]);
 
-  // Terminal Typing Sequence (Phase 3)
   useEffect(() => {
     if (currentPhase !== 'analysis') return;
 
@@ -187,28 +184,24 @@ const Hero = () => {
 
     let charIndex = typedText.length;
     if (charIndex < currentLine.length) {
-      // Type next character
-      const timer = setTimeout(() => {
+        const timer = setTimeout(() => {
         setTypedText(currentLine.slice(0, charIndex + 1));
-      }, 10 + Math.random() * 10); // Fast typing speed
+      }, 10 + Math.random() * 10); 
       return () => clearTimeout(timer);
     } else {
-      // Line is fully typed. Pause, then move to next line or next phase
-      const pauseTimer = setTimeout(() => {
+          const pauseTimer = setTimeout(() => {
         setCompletedLines((prev) => [...prev, currentLine]);
         if (activeLineIndex < logLines.length - 1) {
           setTypedText('');
           setActiveLineIndex((prev) => prev + 1);
         } else {
-          // All lines completed. Move to Phase 4 (Hold)
-          setCurrentPhase('hold');
+                  setCurrentPhase('hold');
         }
-      }, 200); // Snappy, rapid pause between lines
+      }, 200); 
       return () => clearTimeout(pauseTimer);
     }
   }, [currentPhase, activeLineIndex, typedText]);
 
-  // Phase 4 (Hold) transition to Phase 5 (Story) after 300 milliseconds
   useEffect(() => {
     if (currentPhase === 'hold') {
       const timer = setTimeout(() => {
@@ -221,8 +214,7 @@ const Hero = () => {
   return (
     <div className="hero-story-container">
       
-      {/* Cinematic Starfield Background with Slow Ambient Movement */}
-      <div className="celestial-bg">
+          <div className="celestial-bg">
         {particles.map((p) => (
           <motion.div
             key={p.id}
@@ -245,16 +237,12 @@ const Hero = () => {
             }}
           />
         ))}
-        {/* Subtle Constellation clockwork rings */}
         <div className="cosmic-ring ring-1"></div>
         <div className="cosmic-ring ring-2"></div>
       </div>
 
       <AnimatePresence mode="wait">
         
-        {/* =========================================================
-            PHASE 2, 3, & 4: HOLOGRAPHIC SYSTEM ANALYSIS WINDOW
-            ========================================================= */}
         {(currentPhase === 'analysis' || currentPhase === 'hold') && (
           <div className="system-alert-center-wrapper">
             <motion.div
@@ -271,7 +259,6 @@ const Hero = () => {
               }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              {/* Ancient cybernetic borders */}
               <div className="alert-corner tl"></div>
               <div className="alert-corner tr"></div>
               <div className="alert-corner bl"></div>
@@ -290,7 +277,6 @@ const Hero = () => {
                   </p>
                 ))}
                 
-                {/* Active typing line */}
                 {currentPhase === 'analysis' && (
                   <p className="system-log-line active-line">
                     <span className="prompt-cyan">&gt;</span> {typedText}
@@ -302,9 +288,6 @@ const Hero = () => {
           </div>
         )}
 
-        {/* =========================================================
-            PHASE 5: THE STORY BEGINS OVER ARTWORK
-            ========================================================= */}
         {currentPhase === 'story' && (
           <motion.div
             key="cosmic-scroll-wrapper"
@@ -314,7 +297,6 @@ const Hero = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
           >
-            {/* VIEWPORT 1: ABOUT ME STORY SECTION */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -378,7 +360,6 @@ const Hero = () => {
               </div>
             </motion.div>
 
-            {/* VIEWPORT 2: THE TECHSTACK VAULT CONSTELLATION SECTION */}
             <motion.div
               id="vault"
               initial={{ opacity: 0, y: 40 }}
@@ -387,7 +368,6 @@ const Hero = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="sticky-viewport-section vault-section-viewport"
             >
-              {/* Constellation Overlay Background Lines */}
               <svg className="vault-constellation-overlay" viewBox="0 0 1000 600" preserveAspectRatio="none">
                 <line x1="200" y1="150" x2="500" y2="80" className="constellation-link" />
                 <line x1="500" y1="80" x2="800" y2="150" className="constellation-link" />
@@ -399,17 +379,14 @@ const Hero = () => {
               </svg>
 
               <div className="vault-container">
-                {/* Vault Title */}
                 <div className="vault-header">
                   <span className="vault-system-tag">SYSTEM INVENTORY</span>
                   <h2 className="vault-main-title">[ VAULT ]</h2>
                   <p className="vault-subtitle">The attributes, tools, and skills compiled across timelines.</p>
                 </div>
 
-                {/* Stargrid columns */}
                 <div className="vault-stargrid">
                   
-                  {/* Category 1: Attributes & Foundations */}
                   <div className="vault-star-column">
                     <h3 className="vault-column-header">
                       <span className="header-star">★</span> ATTRIBUTES & FOUNDATIONS
@@ -467,7 +444,6 @@ const Hero = () => {
                     </div>
                   </div>
 
-                  {/* Category 2: Active Tech Skills */}
                   <div className="vault-star-column active-tech-col">
                     <h3 className="vault-column-header header-cyan">
                       <span className="header-star">★</span> ACTIVE SKILLS & TECH
@@ -525,7 +501,6 @@ const Hero = () => {
                     </div>
                   </div>
 
-                  {/* Category 3: Arsenal & Focus */}
                   <div className="vault-star-column">
                     <h3 className="vault-column-header">
                       <span className="header-star">★</span> ARSENAL & EXPLORATION
@@ -585,7 +560,6 @@ const Hero = () => {
 
                 </div>
 
-                {/* Footer status text */}
                 <div className="vault-footer-text">
                   [ Every technology listed represents another tool acquired on an ongoing journey. ]
                 </div>
@@ -593,16 +567,12 @@ const Hero = () => {
               </div>
             </motion.div>
 
-            {/* VIEWPORT 3: ACHIEVEMENTS SECTION */}
             <Achievements />
 
-            {/* VIEWPORT 4: PROJECT OVERVIEW SECTION */}
             <ProjectOverview />
 
-            {/* VIEWPORT 5: HIDDEN SCENARIO SECTION */}
             <ForbiddenRecord />
 
-            {/* VIEWPORT 6: FINAL CHAPTER SECTION */}
             <LastPage />
           </motion.div>
         )}

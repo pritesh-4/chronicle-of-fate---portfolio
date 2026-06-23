@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 
 const CustomCursor = () => {
-  // Motion values for actual cursor position
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   
-  // Spring physics for delayed outer tracking ring
   const ringX = useSpring(cursorX, { damping: 30, stiffness: 220 });
   const ringY = useSpring(cursorY, { damping: 30, stiffness: 220 });
 
@@ -16,17 +14,14 @@ const CustomCursor = () => {
   const [particles, setParticles] = useState([]);
 
   useEffect(() => {
-    // Detect if mouse pointer is fine and hover is supported (ignore touch-only devices)
     const hasMouse = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     if (!hasMouse) return;
 
-    // Handle mouse movement and particle spawn
     const handleMouseMove = (e) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
       setHidden(false);
 
-      // Spawn constellation trail particles
       if (Math.random() < 0.35) {
         setParticles((prev) => {
           const newParticle = {
@@ -34,11 +29,11 @@ const CustomCursor = () => {
             x: e.clientX,
             y: e.clientY,
             size: Math.random() * 3.5 + 2,
-            color: Math.random() > 0.45 ? '#7AB8FF' : '#D9B96A', // ORV Cyan or Gold
+            color: Math.random() > 0.45 ? '#7AB8FF' : '#D9B96A',
             angle: Math.random() * (Math.PI * 2),
             speed: Math.random() * 1.5 + 0.8,
           };
-          return [...prev.slice(-25), newParticle]; // Keep trail array size small for performance
+          return [...prev.slice(-25), newParticle];
         });
       }
     };
@@ -46,7 +41,6 @@ const CustomCursor = () => {
     const handleMouseDown = () => setClicked(true);
     const handleMouseUp = () => setClicked(false);
 
-    // Hover state over interactive DOM tags/attributes
     const handleMouseOver = (e) => {
       const target = e.target;
       if (!target) return;
@@ -86,11 +80,11 @@ const CustomCursor = () => {
     };
   }, [cursorX, cursorY]);
 
-  // Constantly clear out stale particles
+
   useEffect(() => {
     const interval = setInterval(() => {
       setParticles((prev) => {
-        if (prev.length === 0) return prev; // Prevent state updates and re-renders if trail is empty
+        if (prev.length === 0) return prev; 
         return prev.slice(1);
       });
     }, 120);
@@ -101,7 +95,6 @@ const CustomCursor = () => {
 
   return (
     <>
-      {/* Particle Trail Layer */}
       <div className="cursor-trail-layer">
         {particles.map((p) => (
           <motion.div
@@ -131,7 +124,6 @@ const CustomCursor = () => {
         ))}
       </div>
 
-      {/* Inner Precision Target (Cyan) */}
       <motion.div
         className={`custom-cursor-dot ${clicked ? 'clicked' : ''} ${hovered ? 'hovered' : ''}`}
         style={{
@@ -142,7 +134,6 @@ const CustomCursor = () => {
         }}
       />
 
-      {/* Outer Delayed Tracking Ring (Gold) */}
       <motion.div
         className={`custom-cursor-ring ${clicked ? 'clicked' : ''} ${hovered ? 'hovered' : ''}`}
         style={{
@@ -152,7 +143,6 @@ const CustomCursor = () => {
           translateY: '-50%',
         }}
       >
-        {/* Cyber brackets */}
         <div className="cursor-bracket tl"></div>
         <div className="cursor-bracket tr"></div>
         <div className="cursor-bracket bl"></div>

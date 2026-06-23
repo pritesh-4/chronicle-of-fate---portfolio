@@ -14,7 +14,6 @@ const Footer = () => {
       setStatus('ERROR: Input parameters missing.');
       return;
     }
-    // Simulate system message processing
     setStatus('PROCESSING CONTRACT PROPOSAL...');
     setTimeout(() => {
       setStatus('SUCCESS: Propose contract accepted by Star Stream.');
@@ -32,18 +31,15 @@ const Footer = () => {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Cybernetic Corner Decorations */}
       <div className="system-corner tl"></div>
       <div className="system-corner tr"></div>
       <div className="system-corner bl"></div>
       <div className="system-corner br"></div>
 
-      {/* Scanline Effect */}
       <div className="system-scanlines"></div>
 
       <div className="footer-grid">
-        {/* Column 1: Star Stream Channel Info & Social Coordinates */}
-        <div className="footer-col col-info">
+          <div className="footer-col col-info">
           <span className="system-alert-badge">COORDINATES</span>
           <h3 className="footer-title">[ Incarnation Pritesh ]</h3>
           <p className="footer-desc">
@@ -65,7 +61,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Column 2: Attributes & Stigmas (Tech Stack) */}
         <div className="footer-col col-skills">
           <span className="system-alert-badge">STATUS WINDOW</span>
           <h3 className="footer-title">[ Attributes & Stigmas ]</h3>
@@ -112,7 +107,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Column 3: Propose Contract (Contact Form) */}
         <div className="footer-col col-contract">
           <span className="system-alert-badge">SPONSOR CONTRACT</span>
           <h3 className="footer-title">[ Offer Sponsorship ]</h3>

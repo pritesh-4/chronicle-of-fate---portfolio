@@ -39,7 +39,6 @@ const TERMINAL_LOGS = [
   "access granted"
 ];
 
-// JetBrains Mono Typewriter sequence for system diagnostics window
 const TerminalLog = ({ onFinish }) => {
   const [completedLines, setCompletedLines] = useState([]);
   const [activeLineIndex, setActiveLineIndex] = useState(0);
@@ -64,10 +63,10 @@ const TerminalLog = ({ onFinish }) => {
           setCompletedLines((prev) => [...prev, currentLine]);
           setCurrentText("");
           setActiveLineIndex((prev) => prev + 1);
-        }, 400); // 400ms pause between log segments
+        }, 400); 
         return () => clearTimeout(pause);
       }
-    }, 20); // Fast typewriter speed
+    }, 20); 
 
     return () => clearInterval(interval);
   }, [activeLineIndex, onFinish]);
@@ -100,7 +99,7 @@ const ProjectOverview = () => {
     if (inView && phase === 'dormant') {
       const timer = setTimeout(() => {
         setPhase('system-alert');
-      }, 800); // 800ms intro delay before opening ORV window
+      }, 800); 
       return () => clearTimeout(timer);
     }
   }, [inView, phase]);
@@ -112,17 +111,15 @@ const ProjectOverview = () => {
   const handleMouseMove = (e) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width / 2) / 35; // Parallax divider
+    const x = (e.clientX - rect.left - rect.width / 2) / 35; 
     const y = (e.clientY - rect.top - rect.height / 2) / 35;
     setMouseOffset({ x, y });
   };
 
   const handleAccessTimeline = (project) => {
-    // Navigate with page state parameters
     navigate('/project', { state: { project } });
   };
 
-  // Parallax stars
   const [bgStars] = useState(() =>
     Array.from({ length: 30 }).map((_, i) => ({
       id: i,
@@ -140,8 +137,7 @@ const ProjectOverview = () => {
       className="projects-overview-section"
       onMouseMove={handleMouseMove}
     >
-      {/* Background Parallax Stars */}
-      <div className="projects-starfield">
+        <div className="projects-starfield">
         {bgStars.map((star) => (
           <div 
             key={star.id} 
@@ -158,7 +154,6 @@ const ProjectOverview = () => {
         ))}
       </div>
 
-      {/* Layered Concentric Digital Clockwork Gears */}
       <div className="gear-system-wrap">
         <div 
           className="clockwork-gear gear-outer"
@@ -181,8 +176,7 @@ const ProjectOverview = () => {
       </div>
 
       <AnimatePresence mode="wait">
-        {/* PHASE 2: SYSTEM ALERT CONSOLE WINDOW */}
-        {phase === 'system-alert' && (
+          {phase === 'system-alert' && (
           <div className="system-alert-window-container">
             <motion.div 
               className="orv-stigma-system-window"
@@ -197,7 +191,6 @@ const ProjectOverview = () => {
               }}
               transition={{ duration: 0.7, ease: "easeOut" }}
             >
-              {/* Corner Cyber Brackets */}
               <div className="window-cyber-bracket tl"></div>
               <div className="window-cyber-bracket tr"></div>
               <div className="window-cyber-bracket bl"></div>
@@ -213,7 +206,6 @@ const ProjectOverview = () => {
           </div>
         )}
 
-        {/* PHASE 3: TIMELINE RECORDS ARCHIVE REVEAL */}
         {phase === 'archived-records' && (
           <motion.div 
             className="timeline-archive-wrapper"
@@ -221,14 +213,12 @@ const ProjectOverview = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Header Description */}
             <div className="archive-header">
               <span className="archive-badge">SYSTEM VAULT</span>
               <h2 className="archive-title">[ RECORDED TIMELINES ]</h2>
               <p className="archive-subtitle"> Classified scenario chronicles decrypted from the Star Stream.</p>
             </div>
 
-            {/* Timelines list */}
             <div className="archive-records-list">
               {projectsData.map((project, idx) => (
                 <motion.div
@@ -247,22 +237,18 @@ const ProjectOverview = () => {
                     transition: { duration: 0.25, ease: "easeOut" }
                   }}
                 >
-                  {/* Glowing bracket accents */}
                   <div className="record-accent tl"></div>
                   <div className="record-accent tr"></div>
                   <div className="record-accent bl"></div>
                   <div className="record-accent br"></div>
 
-                  {/* Left Column: Timeline index identifier */}
                   <div className="record-index-col">
                     <span className="index-label">TIMELINE</span>
                     <span className="index-val">#{project.id}</span>
                   </div>
 
-                  {/* Divider */}
                   <div className="record-divider-line"></div>
 
-                  {/* Right Column: Scenario description metadata */}
                   <div className="record-content-col">
                     <div className="record-content-head">
                       <div className="record-title-wrap">
@@ -300,7 +286,6 @@ const ProjectOverview = () => {
               ))}
             </div>
 
-            {/* Explore Project Realm Button */}
             <motion.div 
               className="explore-realm-action-container"
               initial={{ opacity: 0, y: 25 }}

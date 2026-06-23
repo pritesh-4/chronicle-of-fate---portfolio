@@ -57,12 +57,10 @@ const projectsList = [
 ];
 
 const Project = () => {
-  // Scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Subtle background stars
   const [stars] = useState(() =>
     Array.from({ length: 30 }).map((_, i) => ({
       id: i,
@@ -74,7 +72,6 @@ const Project = () => {
     }))
   );
 
-  // Framer Motion reveal variants
   const gridVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -96,7 +93,6 @@ const Project = () => {
 
   return (
     <div className="project-archive-viewport">
-      {/* Quiet Constellation overlay & background stars */}
       <div className="archive-starfield-bg">
         {stars.map((s) => (
           <motion.div 
@@ -120,7 +116,6 @@ const Project = () => {
       </div>
 
       <div className="archive-inner-container">
-        {/* Large ORV System Header */}
         <motion.div 
           className="archive-system-header"
           initial={{ opacity: 0, y: -15 }}
@@ -133,7 +128,6 @@ const Project = () => {
           <p className="header-subtitle-text">Select a scenario record for review.</p>
         </motion.div>
 
-        {/* 2x2 Grid of Scenario records */}
         <motion.div 
           className="archive-scenario-grid"
           variants={gridVariants}
@@ -151,14 +145,12 @@ const Project = () => {
                 transition: { duration: 0.25 }
               }}
             >
-              {/* ORV Window Corner cyber brackets */}
               <div className="orv-bracket tl"></div>
               <div className="orv-bracket tr"></div>
               <div className="orv-bracket bl"></div>
               <div className="orv-bracket br"></div>
               <div className="orv-window-scanlines"></div>
 
-              {/* 16:9 Scenario Screenshot Area */}
               <div className="orv-screenshot-frame">
                 {project.image ? (
                   <img 
@@ -178,21 +170,18 @@ const Project = () => {
                 )}
               </div>
 
-              {/* Card Metadata info */}
               <div className="orv-card-content">
                 <span className="orv-timeline-tag font-mono">&lt;TIMELINE #{project.id}&gt;</span>
                 <h3 className="orv-project-title font-cinzel">{project.title}</h3>
                 
                 <p className="orv-project-description font-inter">{project.description}</p>
                 
-                {/* Tech Pills */}
                 <div className="orv-tech-tags">
                   {project.tech.map((t) => (
                     <span key={t} className="orv-tech-pill font-mono">{t}</span>
                   ))}
                 </div>
 
-                {/* System Specs table details */}
                 <div className="orv-specs-table">
                   <div className="specs-row">
                     <span className="specs-label font-mono">STATUS:</span>
@@ -208,7 +197,6 @@ const Project = () => {
                   </div>
                 </div>
 
-                {/* Action buttons */}
                 <div className="orv-action-buttons">
                   <a 
                     href={project.repo} 
